@@ -1,0 +1,238 @@
+﻿body {
+	font: 15px sans-serif;
+	line-height: 1.5;
+	background: #899FC6;
+}
+main {
+	max-width: 720px;
+	margin: 0 auto;
+	background: white;
+	padding: 10px;
+}
+main > h1 {
+	margin: 0;
+}
+main > h1, ul.weapons h3, .weapon-card h3 {
+	transform: skewX(-5deg);
+}
+.weapon-card h3 {
+	margin: 0 0 0.25em 0;
+}
+
+div.table {
+	display: grid;
+	grid-template-columns: 1fr 6em 1fr 6em;
+	grid-auto-flow: row;
+	column-gap: 0.25em;
+	row-gap: 0.25em;
+	> label {
+		text-align: right;
+	}
+}
+@media only screen and (min-device-width: 600px) {
+	main div.table {
+		grid-template-columns: 1fr 10em 1fr 10em;
+	}
+}
+@media only screen and (min-device-width: 720px) {
+	main div.table {
+		grid-template-columns: 1fr 14em 1fr 14em;
+	}
+}
+div.table input:not([type="checkbox"]),
+div.table select,
+main input.wide {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+fieldset.hide {
+	opacity: 0.7;
+	padding-bottom: 0;
+}
+fieldset legend {
+	cursor: default;
+}
+fieldset:not(.hide) > legend:before {
+	content: "▽ "; /* + */
+}
+fieldset.hide > legend:before {
+	content: "▷ "; /* − */
+}
+fieldset.hide > *:not(legend) {
+	display: none;
+}
+
+.info-button, .weapon-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: baseline;
+	border: 1px solid currentColor;
+	margin-left: 0.2em;
+	font: 12px monospace;
+	height: 1em;
+	&.info-button {
+		width: 1em;
+		border-radius: 50%;
+	}
+	&.weapon-button {
+		padding: 0 0.15em;
+		border-radius: 0.3em;
+	}
+	&.active {
+		cursor: default;
+		&:hover {
+			background-color: #FFFFFF;
+			outline: 1px solid currentColor;
+		}
+	}
+	&:not(.active) {
+		cursor: default;
+		opacity: 0.5;
+	}
+}
+
+#base-weapons {
+	ul.weapons {
+		/*display: flex;
+		flex-direction: column;
+		> li {
+			display: flex;
+			flex-direction: column;
+			border: 1px solid #ccc;
+		}*/
+		> li {
+			margin-top: 0.5em;
+			border-top: 1px solid #ccc;
+			> h3 {
+				margin: 0.25em 0;
+			}
+		}
+	}
+}
+div.traits {
+	margin-top: 0.3em;
+}
+span.trait, span.score {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #606060;
+	color: white;
+	margin-right: 0.3em;
+	padding: 0.3em 0.4em;
+	text-transform: uppercase;
+	vertical-align: bottom;
+	.weight, &[weight]:after {
+		display: inline-block;
+		background-color: white;
+		color: black;
+		margin-left: 0.25em;
+		padding: 0 0.25em;
+	}
+	&[weight] {
+		background-color: #405080;
+	}
+	&[weight]:after {
+		content: attr(weight);
+	}
+	&[title] {
+		cursor: help;
+	}
+}
+span.trait {
+	&.uncommon {
+		background-color: #c45500;
+	}
+	&.rare {
+		background-color: #002664;
+	}
+	&.unique {
+		background-color: #54166E;
+	}
+	&.simple {
+		background-color: #606060;
+	}
+	&.martial {
+		background-color: #405080;
+	}
+	&.advanced {
+		background-color: #604080;
+	}
+}
+span.score {
+	&.too-good {
+		color: white;
+		/*background-color: #FF00CC;*/
+		--stripe-size: 5px;
+		background-image: repeating-linear-gradient(-50deg,
+			transparent,
+			transparent var(--stripe-size),
+			#E5BD1D var(--stripe-size),
+			#E5BD1D calc(var(--stripe-size) * 2)
+		); 
+		background-color: #28282A;
+		text-shadow: 0 0 5px black, 0 0 5px black, 0 0 5px black;
+	}
+	&.above-average {
+		color: white;
+		background-color: #007bff;
+	}
+	&.just-right {
+		color: white;
+		background-color: #28a745;
+	}
+	&.alright {
+		color: white;
+		background-color: #81AF2A;
+	}
+	&.below-average {
+		color: #212529;
+		background-color: #ffc107;
+	}
+	&.not-good {
+		color: white;
+		background-color: #dc3545;
+	}
+}
+
+#warnings {
+	margin: 0.3em 0;
+	padding: 0;
+	> li {
+		display: block;
+		padding: 0.15em 0.3em;
+		padding-left: 0.5em;
+	}
+	> li {
+		border-left: 0.3em solid var(--border-color);
+	}
+	> li.info {
+		--border-color: #335fc3a0;
+		background-color: #335fc320;
+	}
+	/*> li.info {
+		border-left: 0.3em solid #33c354a0;
+		background-color: #33c35430;
+	}*/
+	> li.warn {
+		--border-color: #ffc107;
+		border-left: 0.3em solid var(--border-color);
+		background-color: #ffc10740;
+	}
+	/* 0.3em solid #335fc3a0 */
+	> li + li {
+		margin-top: 0.25em;
+	}
+	.note {
+		font-size: 85%;
+		font-style: italic;
+	}
+	.explain {
+		border-left: 0.3em solid var(--border-color);
+		background: white;
+		margin: 0.30em 0;
+		padding: 0.15em 0.3em;
+	}
+}

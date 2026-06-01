@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html><head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Weapons!</title>
+	<link rel="stylesheet" href="style.css?v=AUTO_DATE"/>
+</head><body>
+	<main>
+		<h1>YAL's PF2e weapon builder</h1>
+		<fieldset>
+			<legend>Weapon builder</legend>
+			<select id="load-template">
+				<option selected value="">Load a base weapon?</option>
+			</select>
+			<div class="table">
+				<label for="weapon-name">
+					Name
+				</label><div>
+					<input type="text" id="weapon-name" value="Lickmace"/>
+				</div>
+				<label for="weapon-rarity">
+					Rarity
+				</label><div>
+					<select id="weapon-rarity">
+						<option value="common">Common</option>
+						<option value="uncommon" selected>Uncommon</option>
+						<option value="rare">Rare</option>
+						<option value="unique">Unique</option>
+						<option value="homebrew">Homebrew</option>
+					</select>
+				</div>
+				
+				<label for="weapon-category">
+					Category
+				</label><div>
+					<select id="weapon-category">
+						<option value="simple">Simple</option>
+						<option value="martial" selected>Martial</option>
+						<option value="advanced">Advanced</option>
+					</select>
+				</div>
+				<label for="weapon-group">
+					Group
+				</label><div>
+					<select id="weapon-group">
+						<option value="axe">Axe</option>
+						<option value="bomb">Bomb</option>
+						<option value="bow">Bow</option>
+						<option value="brawling">Brawling</option>
+						<option value="club">Club</option>
+						<option value="crossbow">Crossbow</option>
+						<option value="dart">Dart</option>
+						<option value="flail" selected>Flail</option>
+						<option value="hammer">Hammer</option>
+						<option value="knife">Knife</option>
+						<option value="pick">Pick</option>
+						<option value="polearm">Polearm</option>
+						<option value="shield">Shield</option>
+						<option value="sling">Sling</option>
+						<option value="spear">Spear</option>
+						<option value="sword">Sword</option>
+					</select>
+				</div>
+				
+				<label for="weapon-damage-die">
+					Damage die
+				</label><div>
+					<select id="weapon-damage-die">
+						<option value="d4">d4</option>
+						<option value="d6" selected>d6</option>
+						<option value="d8">d8</option>
+						<option value="d10">d10</option>
+						<option value="d12">d12</option>
+					</select>
+				</div>
+				
+				<label for="weapon-damage-type">
+					Damage type
+				</label><div>
+					<select id="weapon-damage-type">
+						<option value="bludgeoning" selected>Bludgeoning</option>
+						<option value="slashing">Slashing</option>
+						<option value="piercing">Piercing</option>
+						<!--
+						<option value="acid">Acid</option>
+						<option value="bludgeoning">Bludgeoning</option>
+						<option value="cold">Cold</option>
+						<option value="electricity">Electricity</option>
+						<option value="fire">Fire</option>
+						<option value="mental">Mental</option>
+						<option value="piercing">Piercing</option>
+						<option value="poison">Poison</option>
+						<option value="slashing">Slashing</option>
+						<option value="sonic">Sonic</option>
+						<option value="spirit">Spirit</option>
+						<option value="vitality">Vitality</option>
+						<option value="void">Void</option>
+						-->
+					</select>
+				</div>
+				
+				<label for="weapon-usage">
+					Usage
+				</label><div>
+					<select id="weapon-usage">
+						<option value="held-in-one-hand" selected>1-handed</option>
+						<option value="held-in-one-plus-hands">1+ hands</option>
+						<option value="held-in-two-hands">2-handed</option>
+						<option value="worngloves">Other</option>
+					</select>
+				</div>
+				
+				<label for="weapon-traits">
+					Traits
+				</label><div>
+					<select id="weapon-traits">
+						<option value="">Add a trait?</option>
+					</select>
+				</div>
+			</div> <!-- .table -->
+			<div>
+				Click on added traits to remove them!
+			</div>
+			<fieldset id="preview" class="weapon-card">
+				<legend>Preview</legend>
+				<h3>
+					<span id="preview-name">Cool Sword</span>
+					<span id="preview-score" class="score">0/0</span>
+				</h3>
+				<div id="preview-meta" class="meta"></div>
+				<div id="preview-traits" class="traits"></div>
+			</fieldset>
+			<fieldset id="review">
+				<legend>Review</legend>
+				<ul id="warnings"></ul>
+				<div id="review-ref" class="weapon-card">
+					<h3>
+						<span id="review-ref-name">Base Weapon</span>
+						<span id="review-ref-score" class="score">0/0</span>
+					</h3>
+					<div id="review-ref-meta" class="meta"></div>
+					<div id="review-ref-traits" class="traits"></div>
+				</div>
+			</fieldset>
+		</fieldset>
+		<fieldset id="base-weapons">
+			<legend>Base weapons</legend>
+		</fieldset>
+		<script src="data.js?v=AUTO_DATE"></script>
+		<script src="script.js?v=AUTO_DATE"></script>
+	</main>
+</body></html>

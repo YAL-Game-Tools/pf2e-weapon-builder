@@ -1,0 +1,7 @@
+--js bin/script.js
+--class-path src
+--main App
+--dce full
+--define js-es=6
+--debug
+--macro tools.UpdatePHP.run()
