@@ -27,7 +27,7 @@ class App {
 		);
 		//weapons.sort((a, b) -> a.traits.length - b.traits.length);
 		weapons.sort((a, b) -> a.name < b.name ? -1 : 1);
-		ListPrinter.run(weapons);
+		ListPrinter.init(weapons);
 		Validators.init(weapons);
 		Editor.init(weapons);
 		//WeaponGen.run(weapons);

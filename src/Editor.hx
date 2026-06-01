@@ -27,11 +27,22 @@ class Editor {
 		});
 		return el;
 	}
+	static function findLinkFreq<T:Element>(qry:String, ?c:Class<T>):T {
+		var el = inline find(qry, c);
+		el.addEventListener("input", e -> {
+			if (!hasChanges) {
+				hasChanges = true;
+				loadTemplate.value = "";
+			}
+			update();
+		});
+		return el;
+	}
 	static var hasChanges = false;
 	static var loadTemplate:SelectElement = find("#load-template");
 	static var traitSelect:SelectElement = find("#weapon-traits");
 	//
-	static var weaponName:InputElement = findLink("#weapon-name");
+	static var weaponName:InputElement = findLinkFreq("#weapon-name");
 	static var weaponRarity:SelectElement = findLink("#weapon-rarity");
 	static var weaponCategory:SelectElement = findLink("#weapon-category");
 	static var weaponGroup:SelectElement = findLink("#weapon-group");
@@ -74,7 +85,7 @@ class Editor {
 		previewName.innerText = wep.name;
 		ListPrinter.print(wep, previewScore, previewMeta, previewTraits, traitBlocks);
 		previewWarnings.innerHTML = "";
-		Validators.refDiv.style.display = "none";
+		WeaponRef.hide();
 		Validators.runAndPrintTo(wep, previewWarnings);
 	}
 	public static function init(weapons:Array<Weapon>) {

@@ -68,6 +68,7 @@ class WeaponTraitSets {
 		Hampering,
 		Injection,
 		JoustingD6,
+		Reach,
 		Shove,
 		Sweep,
 		Tearing,

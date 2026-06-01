@@ -1,3 +1,5 @@
+import data.WeaponDamageType;
+import data.WeaponTrait;
 import js.html.MouseEvent;
 import tools.HtmlBits;
 import js.html.DivElement;
@@ -72,27 +74,6 @@ class Validators {
 		return info;
 	}
 	//
-	public static var refDiv:Element = find("#review-ref");
-	public static function updateRefWeapon(wep:Weapon) {
-		static var refName:SpanElement = find("#review-ref-name");
-		static var refScore:TraitBlock = find("#review-ref-score");
-		static var refMeta:DivElement = find("#review-ref-meta");
-		static var refTraits:DivElement = find("#review-ref-traits");
-		refDiv.style.display = "";
-		//refDiv.classList.remove("hide");
-		refName.innerText = wep.name;
-		ListPrinter.print(wep, refScore, refMeta, refTraits, null);
-	}
-	public static function createWeaponBlock(wep:Weapon) {
-		var button = document.createSpanElement();
-		button.addEventListener("click", _ -> {
-			updateRefWeapon(wep);
-		});
-		button.classList.add("weapon-button", "active");
-		button.append(wep.name);
-		return button;
-	}
-	//
 	public static function init(weapons:Array<Weapon>) {
 		function add(name, func) {
 			var val = new Validator(name, func);
@@ -115,22 +96,22 @@ class Validators {
 				if (n == 1) {
 					bits = [
 						"Only one base weapon (",
-						createWeaponBlock(violators[0]),
+						WeaponRef.create(violators[0]),
 						") fails this pattern.",
 					];
 				} else if (n <= 3) {
 					bits = ["Only a few base weapons ("];
 					for (i in 0 ... n - 1) {
 						if (i > 0) bits.push(", ");
-						bits.push(createWeaponBlock(violators[i]));
+						bits.push(WeaponRef.create(violators[i]));
 					}
 					bits.push(" and ");
-					bits.push(createWeaponBlock(violators[n - 1]));
+					bits.push(WeaponRef.create(violators[n - 1]));
 					bits.push(") fail this pattern.");
 				} else {
 					var listBits:HtmlBits = ["Weapons: "];
 					for (wep in violators) {
-						listBits.push(createWeaponBlock(wep));
+						listBits.push(WeaponRef.create(wep));
 					}
 					var p = Math.round(violators.length / weapons.length * 100);
 					bits = [
@@ -202,23 +183,31 @@ class Validators {
 		});
 		
 		add("Versatile#", (wep, out) -> {
-			var n = 0;
-			if (wep.hasTrait(VersatileB)) n++;
-			if (wep.hasTrait(VersatileS)) n++;
-			if (wep.hasTrait(VersatileP)) n++;
-			if (n > 1) {
+			var versatileCount = 0;
+			inline function check(trait:WeaponTrait, damageType:WeaponDamageType) {
+				if (wep.hasTrait(trait)) {
+					versatileCount += 1;
+					if (wep.damageType == damageType) {
+						out.warn("This weapon's versatile damage type is the same as its damage type.");
+					}
+				}
+			}
+			check(VersatileB, Bludgeoning);
+			check(VersatileS, Slashing);
+			check(VersatileP, Piercing);
+			if (versatileCount > 1) {
 				out.warn("Weapons don't usually have multiple Versatile traits, consider using Modular instead.");
 			}
 		});
 		
-		add("Agile", (wep, out) -> {
-			if (wep.hasTrait(Agile) && wep.getDieSize() > 6) {
+		add("Die size", (wep, out) -> {
+			var dieSize = wep.getDieSize();
+			if (wep.hasTrait(Agile) && dieSize > 6) {
 				out.warn("Agile weapons don't usually have a damage die above a d6.");
-			}
-		});
-		add("Finesse", (wep, out) -> {
-			if (wep.hasTrait(Finesse) && wep.getDieSize() > 8) {
-				out.warn("Agile weapons don't usually have a damage die above a d8.");
+			} else if (wep.hasTrait(Finesse) && dieSize > 8) {
+				out.warn("Finesse weapons don't usually have a damage die above a d8.");
+			} else if (wep.usage == HeldInOneHand && dieSize > 8) {
+				out.warn("One-handed weapons don't usually have a damage die above a d8.");
 			}
 		});
 		add("Maneuvers", (wep, out) -> {
@@ -294,7 +283,7 @@ class Validators {
 				out.warn(m, [m,
 					createInfoBlock([
 						"Sometimes a weapon is more than just a weapon (",
-						createWeaponBlock(weapons.find(wep -> wep.name == "Battle Lute")),
+						WeaponRef.create(weapons.find(wep -> wep.name == "Battle Lute")),
 						") and sometimes there's nothing else it needs."
 					]),
 				]);

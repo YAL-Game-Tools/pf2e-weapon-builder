@@ -12,6 +12,19 @@ main {
 main > h1 {
 	margin: 0;
 }
+@media only screen and (max-device-width: 480px) {
+	main > h1 {
+		font-size: 1.5em;
+	}
+	.wide-only {
+		display: none;
+	}
+}
+@media only screen and (max-device-width: 350px) {
+	main div.table {
+		grid-template-columns: 1fr 2fr;
+	}
+}
 main > h1, ul.weapons h3, .weapon-card h3 {
 	transform: skewX(-5deg);
 }
@@ -62,6 +75,11 @@ fieldset.hide > legend:before {
 fieldset.hide > *:not(legend) {
 	display: none;
 }
+fieldset p {
+	margin: 0.5em 0;
+	legend + & { margin-top: 0 }
+	&:last-child { margin-bottom: 0 }
+}
 
 .info-button, .weapon-button {
 	display: inline-flex;
@@ -111,16 +129,12 @@ fieldset.hide > *:not(legend) {
 		}
 	}
 }
-div.traits {
-	margin-top: 0.3em;
-}
 span.trait, span.score {
 	display: inline-block;
 	font-size: 12px;
 	font-weight: bold;
 	background-color: #606060;
 	color: white;
-	margin-right: 0.3em;
 	padding: 0.3em 0.4em;
 	text-transform: uppercase;
 	vertical-align: bottom;
@@ -142,6 +156,8 @@ span.trait, span.score {
 	}
 }
 span.trait {
+	margin-right: 0.3em;
+	margin-bottom: 0.3em;
 	&.uncommon {
 		background-color: #c45500;
 	}

@@ -1,3 +1,4 @@
+import js.html.InputElement;
 import js.html.Element;
 import js.html.Console;
 import js.lib.RegExp;
@@ -69,6 +70,7 @@ class ListPrinter {
 		ul.classList.add("weapons");
 		document.getElementById("base-weapons").append(ul);
 		for (wep in weapons) {
+			//if (!(wep.hasDamageType(Bludgeoning) && wep.hasDamageType(Slashing))) continue;
 			var twoHanded = wep.isTwoHanded();
 			var obj = {
 				name: wep.name,
@@ -101,5 +103,13 @@ class ListPrinter {
 			Console.log('${calc.score}/${calc.budget} $deltaStr', obj, info);
 			ul.append(li);
 		}
+	}
+	public static function init(weapons:Array<Weapon>) {
+		var button:InputElement = find("#print-base-weapons");
+		button.addEventListener("click", _ -> {
+			run(weapons);
+			button.parentElement.innerText = "And if you know what browser Developer Tools are,"
+				+ " check out the Console tab for a filterable list!";
+		});
 	}
 }

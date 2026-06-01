@@ -4,6 +4,7 @@
 	<meta name="viewport" content="width=device-width" />
 	<title>Weapons!</title>
 	<link rel="stylesheet" href="style.css?v=AUTO_DATE"/>
+	<script defer="" src="https://cloud.umami.is/script.js" data-website-id="5e27083a-c054-4136-9592-b43ac60a5e84"></script>
 </head><body>
 	<main>
 		<h1>YAL's PF2e weapon builder</h1>
@@ -31,7 +32,7 @@
 				</div>
 				
 				<label for="weapon-category">
-					Category
+					Cat<span class="wide-only">egory</span>
 				</label><div>
 					<select id="weapon-category">
 						<option value="simple">Simple</option>
@@ -63,7 +64,7 @@
 				</div>
 				
 				<label for="weapon-damage-die">
-					Damage die
+					D<span class="wide-only">amage </span>Die
 				</label><div>
 					<select id="weapon-damage-die">
 						<option value="d4">d4</option>
@@ -75,7 +76,7 @@
 				</div>
 				
 				<label for="weapon-damage-type">
-					Damage type
+					D<span class="wide-only">amage </span>Type
 				</label><div>
 					<select id="weapon-damage-type">
 						<option value="bludgeoning" selected>Bludgeoning</option>
@@ -143,8 +144,83 @@
 				</div>
 			</fieldset>
 		</fieldset>
+		<fieldset>
+			<legend>About</legend>
+			<p>
+				This is a tool for designing Pathfinder 2nd Edition weapons!
+			</p><p>
+				It is primarily intended for GMs seeking to homebrew items,
+				but as a player you might also find it useful for proposing tweaks,
+				or just getting a better understanding of how the game's balance works.
+			</p><p>
+				And remember! At the end of the day, Pathfinder is still a role-playing game
+				so it's not all about micro-optimizing a weapon.
+			</p>
+		</fieldset>
+		<fieldset>
+			<legend>FAQ</legend>
+			<fieldset class="hide">
+				<legend>Where's the weapon data from?</legend>
+				<p>
+					To avoid maintaining yet another dataset,
+					weapon metadata is obtained from Foundry VTT's PF2e module
+					using <a href="https://github.com/YAL-Game-Tools/pf2e-weapon-builder/blob/main/bin/macro.fvtt.js">this little macro</a>
+					(can be ran in any world where you have permission to access macros).
+				</p><p>
+					If the world contains third-party modules, weapons from them will be picked up,
+					which can be handy if you'd like a quick glance over these.
+				</p>
+			</fieldset>
+			<fieldset class="hide">
+				<legend>Where do the weights & budgets come from?</legend>
+				<p>
+					There is no official guideline on how weapons are rated,
+					but you can do a little math.
+				</p><p>
+					For example, from the set of various polearms you can tell that all of the maneuver
+					traits have the same "weight", as do Versatile traits (I assume 1);
+				</p><p>
+					By comparing a Fighting Oar to a Longspear you can tell
+					that Sweep + Versatile S = Reach.
+				</p><p>
+					With this you can slowly work your way through the dataset,
+					comparing the weapons' weights to see what makes the most sense
+					and leaves the most weapons of comparable strength with comparable numbers.
+				</p><p>
+					Finally, the 1&amp;2 handed budgets are decided based on what's the most common
+					total weight across the category -
+					here I picked 4 &amp; 9 for Simple,
+					7 &amp; 13 for Martial,
+					and 9 &amp; 15 for Advanced.
+				</p>
+			</fieldset>
+			<fieldset class="hide">
+				<legend>Weapon groups</legend>
+				<p>
+					Different weapon groups may be favored by different players
+					for their critical specializations or compatibility with class feats,
+					but I found no evidence of these impacting a weapon's trait budget -
+					only unspoken conventions for various categories,
+					like swords always dealing Slashing and/or Piercing damage,
+					or knives never having a d10/d12 damage die.
+				</p>
+			</fieldset>
+			<fieldset class="hide">
+				<legend>Ranged weapons?</legend>
+				<p>
+					Given that these have visibly different weighting,
+					I don't think I'll be getting to these too soon, but you can use
+					<a href="https://docs.google.com/document/d/1NXkYl-TsPU16S7EnFhMtBhkj6dkbbQD7LhO_ch2MZPw/edit?tab=t.0#heading=h.nto5qjkdikj6" target="_blank">this old guide</a>
+					in the meantime.
+				</p>
+			</fieldset>
+		</fieldset>
 		<fieldset id="base-weapons">
 			<legend>Base weapons</legend>
+			<p>
+				<input type="button" value="Click here" id="print-base-weapons"/>
+				to show stat blocks for all base weapons! (might take a moment)
+			</p>
 		</fieldset>
 		<script src="data.js?v=AUTO_DATE"></script>
 		<script src="script.js?v=AUTO_DATE"></script>
