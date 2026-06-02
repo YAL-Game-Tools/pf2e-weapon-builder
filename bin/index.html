@@ -2,17 +2,23 @@
 <html><head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width" />
-	<title>Weapons!</title>
+	<title>Weapon Builder</title>
 	<link rel="stylesheet" href="style.css?v=AUTO_DATE"/>
+	<meta property="theme-color" content="#FFF037" />
+	<meta property="og:title" content="YAL's PF2e weapon builder" />
+	<meta property="og:description" content="Make custom weapons or look at balance of existing ones!" />
 	<script defer="" src="https://cloud.umami.is/script.js" data-website-id="5e27083a-c054-4136-9592-b43ac60a5e84"></script>
 </head><body>
 	<main>
 		<h1>YAL's PF2e weapon builder</h1>
 		<fieldset>
 			<legend>Weapon builder</legend>
-			<select id="load-template">
-				<option selected value="">Load a base weapon?</option>
-			</select>
+			<div style="margin-bottom: 0.3em">
+				<select id="load-template">
+					<option selected value="">Load a base weapon?</option>
+				</select>
+				<input type="button" value="Share" id="share-weapon" />
+			</div>
 			<div class="table">
 				<label for="weapon-name">
 					Name
@@ -222,6 +228,7 @@
 				to show stat blocks for all base weapons! (might take a moment)
 			</p>
 		</fieldset>
+		<script src="StringGZ.js"></script>
 		<script src="data.js?v=AUTO_DATE"></script>
 		<script src="script.js?v=AUTO_DATE"></script>
 	</main>

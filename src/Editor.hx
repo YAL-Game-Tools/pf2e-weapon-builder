@@ -1,3 +1,6 @@
+import haxe.Json;
+import js.html.URLSearchParams;
+import tools.ShareButton;
 import js.html.UListElement;
 import js.html.OptionElement;
 import js.html.DivElement;
@@ -61,7 +64,23 @@ class Editor {
 		for (block in previewTraits.querySelectorAll(".trait")) traitBlocks.push(cast block);
 		return traitBlocks;
 	}
-	static function getWeapon(traitBlocks:Array<TraitBlock>):Weapon {
+	static function addTraitBlock(trait:WeaponTrait, ?label:String) {
+		var tuple = WeaponTrait.map[trait];
+		label ??= tuple != null ? tuple.label : trait;
+		for (node in previewTraits.querySelectorAll(".trait")) {
+			var block:TraitBlock = cast node;
+			if (block.trait == trait) return;
+		}
+		var block = new TraitBlock(trait, label);
+		block.addEventListener("click", e -> {
+			block.remove();
+			update();
+		});
+		previewTraits.append(block);
+	}
+	//
+	static function getWeapon(?traitBlocks:Array<TraitBlock>):Weapon {
+		traitBlocks ??= getTraitBlocks();
 		var name = weaponName.value;
 		if (name == "") name = weaponName.placeholder;
 		//
@@ -79,6 +98,19 @@ class Editor {
 			usage: cast weaponUsage.value,
 		};
 	}
+	static function setWeapon(wep:Weapon) {
+		weaponName.value = wep.name;
+		weaponRarity.value = wep.rarity;
+		weaponCategory.value = wep.category;
+		weaponGroup.value = wep.group;
+		weaponDamageDie.value = wep.damage;
+		weaponDamageType.value = wep.damageType;
+		weaponUsage.value = wep.usage;
+		//
+		previewTraits.innerHTML = "";
+		for (trait in wep.traits) addTraitBlock(trait);
+	}
+	//
 	public static function update() {
 		var traitBlocks = getTraitBlocks();
 		var wep = getWeapon(traitBlocks);
@@ -88,9 +120,40 @@ class Editor {
 		WeaponRef.hide();
 		Validators.runAndPrintTo(wep, previewWarnings);
 	}
+	
+	static function initShare() {
+		ShareButton.create(
+			() -> Json.stringify(getWeapon()),
+			(type, text) -> {
+				var base = (Browser.location.hostname != "localhost"
+					? 'https://yal.cc/game-tools/pf2e/weapon/'
+					: Browser.location.origin + Browser.location.pathname
+				);
+				return '$base?params-$type=$text';
+			},
+			cast document.getElementById("share-weapon")
+		);
+		{ // params
+			var params = new URLSearchParams(Browser.location.search);
+			var p:String;
+			function then(str) {
+				Console.log("Loading", str);
+				setWeapon(Json.parse(str));
+				update();
+			}
+			if ((p = params.get("params-e")) != null) {
+				ShareButton.decode("e", p, then);
+			} else if ((p = params.get("params-b")) != null) {
+				ShareButton.decode("b", p, then);
+			} else if ((p = params.get("params-c")) != null) {
+				ShareButton.decode("c", p, then);
+			}
+		};
+	}
+	
 	public static function init(weapons:Array<Weapon>) {
 		//
-		var dummy:Weapon = getWeapon(getTraitBlocks());
+		var dummy:Weapon = getWeapon();
 		dummy.isEstimate = true;
 		function addTraitOption(trait) {
 			var tuple = WeaponTrait.map[trait];
@@ -112,26 +175,12 @@ class Editor {
 		traitSelect.append(document.createHRElement());
 		for (trait in WeaponTraitSets.flavor) addTraitOption(trait);
 		//
-		function addTrait(trait:WeaponTrait, ?label:String) {
-			var tuple = WeaponTrait.map[trait];
-			label ??= tuple != null ? tuple.label : trait;
-			for (node in previewTraits.querySelectorAll(".trait")) {
-				var block:TraitBlock = cast node;
-				if (block.trait == trait) return;
-			}
-			var block = new TraitBlock(trait, label);
-			block.addEventListener("click", e -> {
-				block.remove();
-				update();
-			});
-			previewTraits.append(block);
-		}
 		traitSelect.addEventListener("change", _ -> {
 			var sel:OptionElement = cast traitSelect.selectedOptions[0];
 			if (sel == null || sel.value == "") return;
 			var tuple = WeaponTrait.map[cast sel.value];
 			if (tuple == null) return;
-			addTrait(tuple.trait);
+			addTraitBlock(tuple.trait);
 			update();
 			traitSelect.value = "";
 		});
@@ -151,23 +200,15 @@ class Editor {
 			)) return;
 			hasChanges = false;
 			//
-			weaponName.value = wep.name;
-			weaponRarity.value = wep.rarity;
-			weaponCategory.value = wep.category;
-			weaponGroup.value = wep.group;
-			weaponDamageDie.value = wep.damage;
-			weaponDamageType.value = wep.damageType;
-			weaponUsage.value = wep.usage;
-			//
-			previewTraits.innerHTML = "";
-			for (trait in wep.traits) addTrait(trait);
+			setWeapon(wep);
 			//
 			update();
 		});
 		//
-		addTrait(Reach);
-		addTrait(Tripkee);
-		addTrait(Shove);
+		addTraitBlock(Reach);
+		addTraitBlock(Tripkee);
+		addTraitBlock(Shove);
 		update();
+		initShare();
 	}
 }
