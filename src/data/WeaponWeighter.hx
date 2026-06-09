@@ -130,6 +130,7 @@ class WeaponWeighter {
 			case Propulsive: 1;
 			case Concussive: 1;
 			case DoubleBarrel: 3;
+			case Recovery: 2; // low sample!
 			case Kickback:
 				if (est) return range("1-2");
 				wep.reload > 0 && wep.damageDie >= 8 ? 1 : 2;
