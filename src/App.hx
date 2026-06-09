@@ -23,12 +23,15 @@ class App {
 		weapons = weapons.filter(wep -> wep.damage != null
 			&& !wep.traits.contains(Magical)
 			&& !wep.traits.contains(Consumable)
+			&& !wep.traits.contains(Alchemical)
+			&& !wep.traits.contains(Combination)
 			&& !wep.isRanged()
 		);
+		//weapons = weapons.filter(wep -> wep.group == Firearm && wep.usage == HeldInTwoHands);
 		//weapons.sort((a, b) -> a.traits.length - b.traits.length);
 		weapons.sort((a, b) -> a.name < b.name ? -1 : 1);
 		ListPrinter.init(weapons);
-		Validators.init(weapons);
+		validation.Validators.init(weapons);
 		Editor.init(weapons);
 		//WeaponGen.run(weapons);
 	}

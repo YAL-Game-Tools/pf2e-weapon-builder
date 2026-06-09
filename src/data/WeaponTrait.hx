@@ -1,5 +1,6 @@
 package data;
 
+@:using(data.WeaponTraitTools)
 @:build(data.WeaponTraitBuilder.build())
 enum abstract WeaponTrait(String) to String {
 	var Acid = "acid";

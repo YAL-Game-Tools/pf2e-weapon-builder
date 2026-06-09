@@ -14,4 +14,12 @@ enum abstract WeaponDamageType(String) to String {
 	var Spirit = "spirit";
 	var Vitality = "vitality";
 	var Void = "void";
+	public function isBasic() {
+		return switch (this) {
+			case Bludgeoning: true;
+			case Piercing: true;
+			case Slashing: true;
+			default: false;
+		}
+	}
 }

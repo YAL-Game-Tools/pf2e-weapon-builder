@@ -48,7 +48,7 @@ class ListPrinter {
 			default: "?";
 		}
 		addMetaBlock(handedness, null);
-		addMetaBlock(wep.group, "no-weight");
+		metaDiv.append(new TraitBlock("group-" + wep.group, wep.group));
 		metaDiv.append(new TraitBlock(
 			"damage-" + wep.damage + "-" + wep.damageType,
 			calc.damage.name + " " + wep.damageType,
@@ -106,10 +106,12 @@ class ListPrinter {
 	}
 	public static function init(weapons:Array<Weapon>) {
 		var button:InputElement = find("#print-base-weapons");
-		button.addEventListener("click", _ -> {
+		function onClick() {
 			run(weapons);
 			button.parentElement.innerText = "And if you know what browser Developer Tools are,"
 				+ " check out the Console tab for a filterable list!";
-		});
+		}
+		button.addEventListener("click", onClick);
+		onClick();
 	}
 }

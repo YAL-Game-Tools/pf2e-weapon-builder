@@ -19,6 +19,7 @@ class WeaponTraitSets {
 		Monk,
 		Orc,
 		Tengu,
+		Tripkee,
 		Vanara,
 		Vishkanya,
 	];

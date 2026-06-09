@@ -3,6 +3,7 @@ package data;
 import data.*;
 
 @:using(data.WeaponTools)
+@:using(data.WeaponWeighter)
 typedef Weapon = {
 	var name:String;
 	var category:WeaponCategory;

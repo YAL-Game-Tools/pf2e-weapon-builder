@@ -118,7 +118,7 @@ class Editor {
 		ListPrinter.print(wep, previewScore, previewMeta, previewTraits, traitBlocks);
 		previewWarnings.innerHTML = "";
 		WeaponRef.hide();
-		Validators.runAndPrintTo(wep, previewWarnings);
+		validation.Validators.runAndPrintTo(wep, previewWarnings);
 	}
 	
 	static function initShare() {
@@ -159,7 +159,7 @@ class Editor {
 			var tuple = WeaponTrait.map[trait];
 			var option = document.createOptionElement();
 			var weight = dummy.getTraitWeight(tuple.trait);
-			var weightLabel = WeaponTools.getTraitWeight_range ?? "" + weight;
+			var weightLabel = WeaponWeighter.getTraitWeight_range ?? "" + weight;
 			var label = tuple.label;
 			if (weightLabel != "0") label = '$label ($weightLabel)';
 			option.append(label);

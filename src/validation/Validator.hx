@@ -1,12 +1,5 @@
+package validation;
 import tools.HtmlBits;
-import js.html.DivElement;
-import js.html.SpanElement;
-import js.html.Node;
-import haxe.extern.EitherType;
-import js.html.Console;
-import js.html.Element;
-import js.Browser;
-import js.Browser.document;
 import data.Weapon;
 using StringTools;
 
