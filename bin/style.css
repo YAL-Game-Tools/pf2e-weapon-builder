@@ -41,6 +41,18 @@ div.table {
 	> label {
 		text-align: right;
 	}
+	> label + div {
+		display: flex;
+		> *:first-child {
+			flex-grow: 1;
+			max-width: 100%;
+			box-sizing: border-box;
+			min-width: 0;
+		}
+		> *:not(:first-child) {
+			margin-left: 0.25em;
+		}
+	}
 }
 @media only screen and (min-device-width: 600px) {
 	main div.table {
@@ -52,12 +64,14 @@ div.table {
 		grid-template-columns: 1fr 14em 1fr 14em;
 	}
 }
+/*
 div.table input:not([type="checkbox"]),
 div.table select,
 main input.wide {
 	width: 100%;
 	box-sizing: border-box;
 }
+*/
 
 fieldset.hide {
 	opacity: 0.7;

@@ -150,9 +150,11 @@ class WeaponWeighter {
 		var damage = wep.getDieSize();
 		var pairs = [];
 		var total = 0;
-		inline function add(name, trait, weight) {
-			pairs.push(osh([name, trait, weight]));
+		function add(name, trait, weight) {
+			var pair = osh([name, trait, weight]);
+			pairs.push(pair);
 			total += weight;
+			return pair;
 		}
 		//
 		var damageWeight = Std.int((damage - 4) / 2) * 3;
@@ -179,8 +181,9 @@ class WeaponWeighter {
 				rangeTax = 1;
 			}
 		}
+		var rangePair = null;
 		if (range > 0) {
-			add("range-" + range, null, rangeTax);
+			rangePair = add("range-" + range, null, rangeTax);
 		}
 		if (wep.reload > 0) {
 			add("reload-" + wep.reload, null, -wep.reload);
@@ -203,6 +206,7 @@ class WeaponWeighter {
 		return osh([budget, pairs], {
 			score: total,
 			damage: damagePair,
+			range: rangePair,
 		});
 	}
 }

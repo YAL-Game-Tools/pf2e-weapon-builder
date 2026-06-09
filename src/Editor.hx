@@ -1,3 +1,4 @@
+import js.html.KeyboardEvent;
 import haxe.Json;
 import js.html.URLSearchParams;
 import tools.ShareButton;
@@ -52,6 +53,10 @@ class Editor {
 	static var weaponDamageDie:SelectElement = findLink("#weapon-damage-die");
 	static var weaponDamageType:SelectElement = findLink("#weapon-damage-type");
 	static var weaponUsage:SelectElement = findLink("#weapon-usage");
+	static var weaponRange:InputElement = findLinkFreq("#weapon-range");
+	//
+	static var weaponCustomTrait:InputElement = find("#weapon-custom-trait");
+	static var weaponCustomTraitAdd:InputElement = find("#weapon-custom-trait-add");
 	//
 	static var previewName:SpanElement = find("#preview-name");
 	static var previewScore:TraitBlock = find("#preview-score");
@@ -69,7 +74,7 @@ class Editor {
 		label ??= tuple != null ? tuple.label : trait;
 		for (node in previewTraits.querySelectorAll(".trait")) {
 			var block:TraitBlock = cast node;
-			if (block.trait == trait) return;
+			if (block.trait == trait) return block;
 		}
 		var block = new TraitBlock(trait, label);
 		block.addEventListener("click", e -> {
@@ -77,10 +82,16 @@ class Editor {
 			update();
 		});
 		previewTraits.append(block);
+		return block;
 	}
 	//
 	static function getWeapon(?traitBlocks:Array<TraitBlock>):Weapon {
+		var range = Std.parseInt(weaponRange.value);
 		traitBlocks ??= getTraitBlocks();
+		var thrownBlock = traitBlocks.find(tb -> tb.trait == Thrown);
+		if (range != null && range > 0 && thrownBlock == null) {
+			traitBlocks.push(thrownBlock = addTraitBlock(Thrown));
+		}
 		var name = weaponName.value;
 		if (name == "") name = weaponName.placeholder;
 		//
@@ -91,7 +102,7 @@ class Editor {
 			level: 1,
 			damage: cast weaponDamageDie.value,
 			damageType: cast weaponDamageType.value,
-			range: 0,
+			range: range,
 			reload: 0,
 			traits: traitBlocks.map(block -> block.trait),
 			rarity: cast weaponRarity.value,
@@ -106,6 +117,7 @@ class Editor {
 		weaponDamageDie.value = wep.damage;
 		weaponDamageType.value = wep.damageType;
 		weaponUsage.value = wep.usage;
+		weaponRange.value = wep.range != null && wep.range != 0 ? "" + wep.range : "";
 		//
 		previewTraits.innerHTML = "";
 		for (trait in wep.traits) addTraitBlock(trait);
@@ -205,6 +217,18 @@ class Editor {
 			update();
 		});
 		//
+		function addCustomTrait() {
+			var trait = weaponCustomTrait.value.trim();
+			if (trait == "") return null;
+			return addTraitBlock(cast trait, trait);
+		}
+		weaponCustomTrait.addEventListener("keydown", (e:KeyboardEvent) -> {
+			if (e.key == "Enter") addCustomTrait();
+		});
+		weaponCustomTraitAdd.addEventListener("click", _ -> {
+			addCustomTrait();
+		});
+		// example weapon:
 		addTraitBlock(Reach);
 		addTraitBlock(Tripkee);
 		addTraitBlock(Shove);

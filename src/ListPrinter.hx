@@ -62,6 +62,11 @@ class ListPrinter {
 				var traitBlock = new TraitBlock(p.name, tuple?.label, p.weight);
 				traitDiv.append(traitBlock);
 			}
+		} else if (calc.range != null) {
+			var thrownBlock = traitBlocks.find(tb -> tb.trait == Thrown);
+			if (thrownBlock != null) {
+				thrownBlock.traitWeight = calc.range.weight;
+			}
 		}
 		return calc;
 	}
