@@ -170,8 +170,13 @@ class WeaponWeighter {
 				rangeTax = 1;
 			}
 		} else {
-			// thrown weapons have harsher rules?
-			if (range >= 180) {
+			// thrown weapons have different rules?
+			if (range > 30) {
+				rangeTax = 2;
+			} else if (range > 0) {
+				rangeTax = 1;
+			}
+			/*if (range >= 180) {
 				rangeTax = 4;
 			} else if (range >= 120) {
 				rangeTax = 3;
@@ -179,7 +184,7 @@ class WeaponWeighter {
 				rangeTax = 2;
 			} else if (range >= 30) {
 				rangeTax = 1;
-			}
+			}*/
 		}
 		var rangePair = null;
 		if (range > 0) {
