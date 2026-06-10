@@ -62,7 +62,7 @@ class Validators {
 		info.append("i");
 		info.classList.add("info-button", "active");
 		info.addEventListener("click", (e:MouseEvent) -> {
-			if (extra.parentElement == null) {
+			if (extra.offsetHeight <= 0) {
 				info.parentElement.after(extra);
 			} else extra.remove();
 			e.preventDefault();

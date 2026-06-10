@@ -25,7 +25,7 @@ main > h1 {
 		grid-template-columns: 1fr 2fr;
 	}
 }
-main > h1, ul.weapons h3, .weapon-card h3 {
+main > h1, ul.weapons h3, .weapon-card h3, div.notes {
 	transform: skewX(-5deg);
 }
 .weapon-card h3 {
@@ -63,6 +63,14 @@ div.table {
 	main div.table {
 		grid-template-columns: 1fr 14em 1fr 14em;
 	}
+}
+input#weapon-notes {
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 0.25em;
+}
+div.notes {
+	font-size: 85%;
 }
 /*
 div.table input:not([type="checkbox"]),

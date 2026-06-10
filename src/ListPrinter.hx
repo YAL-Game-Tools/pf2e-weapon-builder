@@ -117,6 +117,8 @@ class ListPrinter {
 				+ " check out the Console tab for a filterable list!";
 		}
 		button.addEventListener("click", onClick);
-		onClick();
+		if (document.location.hostname == "localhost") {
+			onClick();
+		}
 	}
 }

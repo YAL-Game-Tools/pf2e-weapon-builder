@@ -14,6 +14,7 @@ class WeaponRef {
 	static var refScore:TraitBlock = find("#review-ref-score");
 	static var refMeta:DivElement = find("#review-ref-meta");
 	static var refTraits:DivElement = find("#review-ref-traits");
+	static var refNotes:DivElement = find("#review-ref-notes");
 	static var current:Weapon = null;
 	
 	public static function hide() {
@@ -28,6 +29,7 @@ class WeaponRef {
 			current = wep;
 			refDiv.style.display = "";
 			refName.innerText = wep.name;
+			refNotes.innerText = wep.notes ?? "";
 			ListPrinter.print(wep, refScore, refMeta, refTraits, null);
 		}
 	}

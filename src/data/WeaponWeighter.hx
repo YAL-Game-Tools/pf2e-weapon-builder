@@ -83,7 +83,7 @@ class WeaponWeighter {
 			// low sample:
 			case JoustingD6: 2;
 			case Brace: 2;
-			case Tearing: 3;
+			case Tearing: 2; // inventor innovation suggests 1
 			case Resonant: 2;
 			case Hampering: 2;
 			case Tethered: 1;

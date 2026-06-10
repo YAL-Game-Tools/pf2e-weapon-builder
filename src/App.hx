@@ -1,3 +1,4 @@
+import haxe.DynamicAccess;
 import js.html.FieldSetElement;
 import js.html.Console;
 import js.lib.RegExp;
@@ -20,6 +21,15 @@ class App {
 			}
 		}
 		var weapons:Array<Weapon> = (cast Browser.window).pf2eWeapons;
+		var notePairs:DynamicAccess<String> = (cast Browser.window).pf2eWeaponNotes;
+		for (name => notes in notePairs) {
+			var wep = weapons.find(wep -> wep.name == name);
+			if (wep != null) {
+				wep.notes = notes;
+			} else {
+				Console.error('"notes.js" references non-existing weapon "$name"');
+			}
+		}
 		weapons = weapons.filter(wep -> wep.damage != null
 			&& !wep.traits.contains(Magical)
 			&& !wep.traits.contains(Consumable)

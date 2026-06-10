@@ -18,4 +18,5 @@ typedef Weapon = {
 	var rarity:WeaponRarity;
 	var usage:WeaponUsage;
 	var ?isEstimate:Bool;
+	var notes:String;
 };

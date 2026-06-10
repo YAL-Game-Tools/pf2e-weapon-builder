@@ -86,5 +86,36 @@ class ValTraits {
 		});
 		
 		//
+		addSimple("Two-Hand", (wep) -> {
+			if (!wep.hasDashTrait("two-hand")) return null;
+			if (wep.usage == HeldInTwoHands) {
+				return "Two-handed weapons can't have a Two-Hand trait.";
+			}
+			if (wep.hasTrait(Agile)) {
+				return "Agile weapons don't usually have a Two-Hand trait.";
+			}
+			if (wep.hasTrait(FreeHand)) {
+				return "Free-hand weapons don't usually have a Two-Hand trait.";
+			}
+			if (wep.hasTrait(Attached)
+				|| wep.hasTrait(AttachedToCrossbowOrFirearm)
+				|| wep.hasTrait(AttachedToShield)
+			) {
+				return "Attached weapons don't usually have a Two-Hand trait.";
+			}
+			return null;
+		});
+		addSimple("Free-Hand", (wep) -> {
+			if (!wep.hasTrait(FreeHand)) return null;
+			if (wep.usage == HeldInTwoHands) {
+				return "Free-hand weapons can't be two-handed.";
+			}
+			if (wep.getDieSize() > 4) {
+				return "Free-hand weapons don't usually have a damage die above a d4.";
+			}
+			return null;
+		});
+		
+		//
 	}
 }

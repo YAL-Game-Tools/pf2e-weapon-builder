@@ -54,6 +54,7 @@ class Editor {
 	static var weaponDamageType:SelectElement = findLink("#weapon-damage-type");
 	static var weaponUsage:SelectElement = findLink("#weapon-usage");
 	static var weaponRange:InputElement = findLinkFreq("#weapon-range");
+	static var weaponNotes:InputElement = findLink("#weapon-notes");
 	//
 	static var weaponCustomTrait:InputElement = find("#weapon-custom-trait");
 	static var weaponCustomTraitAdd:InputElement = find("#weapon-custom-trait-add");
@@ -63,6 +64,7 @@ class Editor {
 	static var previewMeta:DivElement = find("#preview-meta");
 	static var previewTraits:DivElement = find("#preview-traits");
 	static var previewWarnings:UListElement = find("#warnings");
+	static var previewNotes:DivElement = find("#preview-notes");
 	//
 	static function getTraitBlocks() {
 		var traitBlocks:Array<TraitBlock> = [];
@@ -107,6 +109,7 @@ class Editor {
 			traits: traitBlocks.map(block -> block.trait),
 			rarity: cast weaponRarity.value,
 			usage: cast weaponUsage.value,
+			notes: weaponNotes.value,
 		};
 	}
 	static function setWeapon(wep:Weapon) {
@@ -118,6 +121,7 @@ class Editor {
 		weaponDamageType.value = wep.damageType;
 		weaponUsage.value = wep.usage;
 		weaponRange.value = wep.range != null && wep.range != 0 ? "" + wep.range : "";
+		weaponNotes.value = wep.notes ?? "";
 		//
 		previewTraits.innerHTML = "";
 		for (trait in wep.traits) addTraitBlock(trait);
@@ -129,6 +133,7 @@ class Editor {
 		previewName.innerText = wep.name;
 		ListPrinter.print(wep, previewScore, previewMeta, previewTraits, traitBlocks);
 		previewWarnings.innerHTML = "";
+		previewNotes.innerText = wep.notes ?? "";
 		WeaponRef.hide();
 		validation.Validators.runAndPrintTo(wep, previewWarnings);
 	}

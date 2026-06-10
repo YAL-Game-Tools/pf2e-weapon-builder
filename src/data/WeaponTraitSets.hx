@@ -50,6 +50,7 @@ class WeaponTraitSets {
 		Nonlethal,
 		RangedTrip,
 		Razing,
+		Resonant,
 		Tethered,
 		Thrown,
 		Thrown10,
